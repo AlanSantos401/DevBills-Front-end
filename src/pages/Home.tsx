@@ -1,7 +1,8 @@
 import type { JSX } from "react";
 import Button from "../components/button";
 import { Wallet, TrendingUp, List, CreditCard } from "lucide-react";
-import { Features } from "tailwindcss";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router";
 
 interface Feature {
 	icon: JSX.Element;
@@ -10,6 +11,11 @@ interface Feature {
 }
 
 const Home = () => {
+const navigate = useNavigate();
+
+	const auth =useAuth();
+	console.log(auth)
+
 	const festures: ReadonlyArray<Feature> = [
 		{
 			icon: <Wallet className="w-8 h-8 text-primary-500" />,
@@ -44,7 +50,7 @@ const Home = () => {
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-12  items-center">
 						<div>
 							<h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-								Gerencie suas financias com o{" "}
+								Gerencie suas financias com o
 								<span className="text-primary-500">DevBills</span>
 							</h1>
 							<p className="text-lg text-white mb-8">
@@ -53,7 +59,7 @@ const Home = () => {
 								negócio com facilidade.
 							</p>
 							<div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-								<Button className="text-center px-6 py-3">Começar Agora</Button>
+								<Button className="text-center px-6 py-3" onClick={() => navigate("/login")}>Começar Agora</Button>
 							</div>
 						</div>
 					</div>
@@ -66,25 +72,24 @@ const Home = () => {
 								Recurso do DevBills
 							</h2>
 							<p className="text-lg text-white max-w-2xl mx-auto">
-								{" "}
 								Nossa plataforma oferece tudo o que você precisa para manter
 								suas fonanças organizada.
 							</p>
 						</div>
 
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-							{festures.map((Features) => (
+							{festures.map((Feature) => (
 								<div
-									key={Features.title}
+									key={Feature.title}
 									className="bg-gray-800 p-6 rounder-xl hover:shadow-lg"
 								>
 									<div className="mb-4 bg-primary-500/10 p-3 rounded-full inline-block">
-										{Features.icon}
+										{Feature.icon}
 									</div>
 									<h3 className="text-xl font-semibold text-white mb-2">
-										{Features.title}
+										{Feature.title}
 									</h3>
-									<p className="text-gray-400">{Features.description}</p>
+									<p className="text-gray-400">{Feature.description}</p>
 								</div>
 							))}
 						</div>
@@ -98,7 +103,7 @@ const Home = () => {
 							Comece a usar o DevBills hoje mesmo e tenha o controle total sobre
 							seu dinheiro. É gratuito e fácil de usar!
 						</p>
-						<Button className="mx-auto px-6 py-3">Criar Conta Gratuita</Button>
+						<Button className="mx-auto px-6 py-3" onClick={() => navigate("/login")}>Criar Conta Gratuita</Button>
 					</div>
 				</section>
 			</div>
