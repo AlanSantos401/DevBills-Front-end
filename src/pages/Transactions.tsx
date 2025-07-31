@@ -1,12 +1,22 @@
-import { AlertCircle, ArrowDown, ArrowUp, Plus, Search, Trash2 } from "lucide-react";
+import {
+	AlertCircle,
+	ArrowDown,
+	ArrowUp,
+	Plus,
+	Search,
+	Trash2,
+} from "lucide-react";
 import { Link } from "react-router";
 import MonthYearSelect from "../components/MonthYearSelect";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import Input from "../components/Input";
 import Card from "../components/Card";
 import { TransactionType, type Transaction } from "../types/transactions";
-import { deleteTransaction, getTransactions } from "../services/transactionService";
-import Button from "../components/button";
+import {
+	deleteTransaction,
+	getTransactions,
+} from "../services/transactionService";
+import Button from "../components/Button";
 import { formatCurrency, formatDate } from "../utils/formatters";
 import { toast } from "react-toastify";
 
@@ -17,7 +27,11 @@ const Transactions = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string>("");
 	const [transactions, setTransactions] = useState<Transaction[]>([]);
+	const [filteredTransactions, setFilteredTransactions] = useState<
+		Transaction[]
+	>([]);
 	const [deletingId, setDeletingId] = useState<string>("");
+	const [searchText, setSearchText] = useState<string>("");
 
 	const fetchTransactions = async () => {
 		try {
@@ -25,6 +39,7 @@ const Transactions = () => {
 			setError("");
 			const data = await getTransactions({ year, month });
 			setTransactions(data);
+			setFilteredTransactions(data);
 		} catch (err) {
 			setError("Não foi possível carregar as transações. Tente novamente.");
 		} finally {
@@ -36,25 +51,38 @@ const Transactions = () => {
 		try {
 			setDeletingId(id);
 			await deleteTransaction(id);
-			setTransactions((prev) => prev.filter((transactions) => transactions.id !== id));
+			setTransactions((prev) =>
+				prev.filter((transactions) => transactions.id !== id),
+			);
 			toast.success("Transação excluída com sucesso!");
 		} catch (err) {
-         console.error(err)
-		 toast.error("Erro ao excluir a transação. Tente novamente.");
+			console.error(err);
+			toast.error("Erro ao excluir a transação. Tente novamente.");
 		} finally {
 			setDeletingId("");
 		}
-	}
+	};
 
 	const confirmDelete = (id: string) => {
 		if (window.confirm("Tem certeza que deseja excluir esta transação?")) {
 			handleDelete(id);
 		}
-	}
+	};
 
 	useEffect(() => {
 		fetchTransactions();
 	}, [year, month]);
+
+	const handleSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
+		setSearchText(event.target.value);
+		setFilteredTransactions(
+			transactions.filter((transactions) =>
+				transactions.description
+					.toUpperCase()
+					.includes(event.target.value.toUpperCase()),
+			),
+		);
+	};
 
 	return (
 		<div className="container-app py-5">
@@ -82,6 +110,8 @@ const Transactions = () => {
 					placeholder="Pesquisar transações..."
 					icon={<Search className="w-4 h-4" />}
 					fullWidth
+					onChange={handleSearchChange}
+					value={searchText}
 				/>
 			</Card>
 
@@ -148,7 +178,7 @@ const Transactions = () => {
 								</tr>
 							</thead>
 							<tbody className="divide-y divide-gray-700">
-								{transactions.map((transaction) => (
+								{filteredTransactions.map((transaction) => (
 									<tr key={transaction.id} className="hover:bg-gray-800">
 										<td className="px-3 py-4 text-sm text-gray-400 whitespace-nowrap">
 											<div className="flex items-center">
@@ -193,16 +223,17 @@ const Transactions = () => {
 										</td>
 
 										<td className="px-3 py-4  text-gray-400 whitespace-nowrap ">
-											<button  type="button"
-											onClick={() => confirmDelete(transaction.id)}
-                                            className="text-gray-400 hover:text-red-400 rounded-full"
-											disabled={deletingId === transaction.id}
-
+											<button
+												type="button"
+												onClick={() => confirmDelete(transaction.id)}
+												className="text-gray-400 hover:text-red-400 rounded-full"
+												disabled={deletingId === transaction.id}
 											>
 												{deletingId === transaction.id ? (
-													<span className="inline-block w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin"/>
-												): (<Trash2 className="w-4 h-4 cursor-pointer" />)}
-												
+													<span className="inline-block w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+												) : (
+													<Trash2 className="w-4 h-4 cursor-pointer" />
+												)}
 											</button>
 										</td>
 									</tr>
@@ -216,4 +247,4 @@ const Transactions = () => {
 	);
 };
 
-export default Transactions
+export default Transactions;

@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import Button from "../components/button";
+import Button from "../components/Button";
 import { Wallet, TrendingUp, List, CreditCard } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";
@@ -11,10 +11,10 @@ interface Feature {
 }
 
 const Home = () => {
-const navigate = useNavigate();
+	const navigate = useNavigate();
 
-	const auth =useAuth();
-	console.log(auth)
+	const auth = useAuth();
+	console.log(auth);
 
 	const festures: ReadonlyArray<Feature> = [
 		{
@@ -59,7 +59,12 @@ const navigate = useNavigate();
 								negócio com facilidade.
 							</p>
 							<div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-								<Button className="text-center px-6 py-3" onClick={() => navigate("/login")}>Começar Agora</Button>
+								<Button
+									className="text-center px-6 py-3"
+									onClick={() => navigate("/login")}
+								>
+									Começar Agora
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -98,12 +103,19 @@ const navigate = useNavigate();
 
 				<section className="py-12 md:py-20">
 					<div className="bg-gray-900 p-8 md:p-12 rounnded-xl text-center border border-gray-700">
-						<h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Pronto para organizar suas finanças?</h2>
+						<h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+							Pronto para organizar suas finanças?
+						</h2>
 						<p className="text-white text-opacity-90 max-w-2xl mx-auto mb-8">
 							Comece a usar o DevBills hoje mesmo e tenha o controle total sobre
 							seu dinheiro. É gratuito e fácil de usar!
 						</p>
-						<Button className="mx-auto px-6 py-3" onClick={() => navigate("/login")}>Criar Conta Gratuita</Button>
+						<Button
+							className="mx-auto px-6 py-3"
+							onClick={() => navigate("/login")}
+						>
+							Criar Conta Gratuita
+						</Button>
 					</div>
 				</section>
 			</div>
