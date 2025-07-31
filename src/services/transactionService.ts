@@ -46,3 +46,7 @@ export const getTransactionsMonthly = async (
 
 	return response.data;
 };
+
+export const deleteTransaction = async (id: string): Promise<void> => {
+	await api.delete(`/transactions/${id}`);
+}

@@ -7,9 +7,22 @@ import PrivateRoutes from "./PrivateRoutes";
 import AppLayout from "../layout/AppLayout";
 import Transactions from "../pages/Transactions";
 import TransactionsForm from "../pages/TransactionsForm";
+import { ToastContainer, type ToastContainerProps } from "react-toastify";
 
 
 const AppRoutes = () => {
+  const toastConfig: ToastContainerProps ={
+	position: "top-right",
+	autoClose: 3000,
+	hideProgressBar: false,
+	newestOnTop: true,
+	closeOnClick: true,
+	pauseOnFocusLoss: true,
+	pauseOnHover: true,
+	draggable: true,
+	theme: "colored"
+  }
+
 	return (
 		<BrowserRouter>
 			<AuthProvider>
@@ -27,6 +40,7 @@ const AppRoutes = () => {
 
 					<Route path="*" element={<h2>Página não encontrada</h2>} />
 				</Routes>
+				<ToastContainer {...toastConfig}/>
 			</AuthProvider>
 		</BrowserRouter>
 	);
