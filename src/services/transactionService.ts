@@ -3,6 +3,7 @@ import type {
 	Transaction,
 	TransactionSummary,
 	MonthlyItem,
+	createTransactionDTO,
 } from "../types/transactions";
 import { api } from "./api";
 
@@ -43,10 +44,16 @@ export const getTransactionsMonthly = async (
 		},
 	});
 
-
 	return response.data;
 };
 
 export const deleteTransaction = async (id: string): Promise<void> => {
 	await api.delete(`/transactions/${id}`);
-}
+};
+
+export const createTransaction = async (
+	transacrionData: createTransactionDTO,
+): Promise<Transaction> => {
+	const response = await api.post<Transaction>("/transactions", transacrionData);
+	return response.data;
+};

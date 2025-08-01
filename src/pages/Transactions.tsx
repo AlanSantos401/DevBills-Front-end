@@ -51,7 +51,7 @@ const Transactions = () => {
 		try {
 			setDeletingId(id);
 			await deleteTransaction(id);
-			setTransactions((prev) =>
+			setFilteredTransactions((prev) =>
 				prev.filter((transactions) => transactions.id !== id),
 			);
 			toast.success("Transação excluída com sucesso!");
