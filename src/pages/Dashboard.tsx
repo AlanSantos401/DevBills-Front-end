@@ -109,9 +109,9 @@ const Dashboard = () => {
 				</Card>
 
 				<Card
-					icon={<Wallet size={20} className="text-red-600" />}
+					icon={<Wallet size={20} className="text-red-600 " />}
 					title="Despesas"
-					hover
+					red
 				>
 					<p className="text-2xl font-bold mt-2 text-red-600">
 						{formatCurrency(summary.totalExpenses)}
@@ -161,7 +161,7 @@ const Dashboard = () => {
 					<div className="h-72 mt-4">
 						{monthlyItemsData.length > 0 ? (
 							<ResponsiveContainer width="100%" height="100%">
-								<BarChart data={monthlyItemsData} margin={{left: 40}}>
+								<BarChart data={monthlyItemsData} margin={{ left: 40 }}>
 									<CartesianGrid
 										strokeDasharray="3 3"
 										stroke="rgba(255, 255, 255, 0.1)"
@@ -171,17 +171,20 @@ const Dashboard = () => {
 										stroke="#94A3B8"
 										tick={{ style: { textTransform: "capitalize" } }}
 									/>
-									<YAxis stroke="#94A3B8" tickFormatter={formatCurrency} tick={{ style: { fontSize: 14 } }}/>
-									<Tooltip formatter={formatCurrency} 
-									contentStyle={{
-										backgroundColor: "#1A1A1A",
-										borderColor: "#2A2A2A",
-
-									}
-									}
-									labelStyle={{
-										color: "#f8f8f8",
-									}}
+									<YAxis
+										stroke="#94A3B8"
+										tickFormatter={formatCurrency}
+										tick={{ style: { fontSize: 14 } }}
+									/>
+									<Tooltip
+										formatter={formatCurrency}
+										contentStyle={{
+											backgroundColor: "#1A1A1A",
+											borderColor: "#2A2A2A",
+										}}
+										labelStyle={{
+											color: "#f8f8f8",
+										}}
 									/>
 									<Legend />
 									<Bar dataKey="expenses" name="Despesas" fill="#FF6384" />

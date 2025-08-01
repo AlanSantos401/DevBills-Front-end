@@ -141,8 +141,8 @@ const Transactions = () => {
 						</Link>
 					</div>
 				) : (
-					<div className="overflow-x-auto">
-						<table className="divide-y divide-gray-700 min-h-full w-full">
+					<div className="overflow-y-auto">
+						<table className="divide-y divide-gray-700 min-h-full md:min-w-full">
 							<thead>
 								<tr>
 									<th
@@ -177,7 +177,7 @@ const Transactions = () => {
 									</th>
 								</tr>
 							</thead>
-							<tbody className="divide-y divide-gray-700">
+							<tbody className="divide-y divide-gray-700 overflow-auto">
 								{filteredTransactions.map((transaction) => (
 									<tr key={transaction.id} className="hover:bg-gray-800">
 										<td className="px-3 py-4 text-sm text-gray-400 whitespace-nowrap">
