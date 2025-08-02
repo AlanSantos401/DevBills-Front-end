@@ -1,6 +1,6 @@
 # DevBills
 
-<img src="./assets/jogo-da-cobrinha.png" alt="Jogo da Cobrinha" width="400"/>
+<img src="./src/assets/Devbills.png" alt="Jogo da Cobrinha" width="400"/>
 
 Plataforma Financeira Completa para Controle Pessoal e Empresarial
 
