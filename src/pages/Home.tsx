@@ -50,7 +50,7 @@ const Home = () => {
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-12  items-center">
 						<div>
 							<h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-								Gerencie suas finanças com o
+								Gerencie suas finanças com o {" "}
 								<span className="text-primary-500">DevBills</span>
 							</h1>
 							<p className="text-lg text-white mb-8">
