@@ -1,54 +1,16 @@
-# React + TypeScript + Vite
+# DevBills
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img src="./src/assets/Devbills.png" alt="Jogo da Cobrinha" width="400"/>
 
-Currently, two official plugins are available:
+Plataforma Financeira Completa para Controle Pessoal e Empresarial
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  Esta plataforma é uma solução integrada e intuitiva para gerenciar suas finanças pessoais ou empresariais com eficiência e segurança. Desenvolvida para atender desde usuários que desejam organizar suas despesas diárias até pequenas e médias empresas que precisam acompanhar receitas, despesas e fluxo de caixa em tempo real.
+  O sistema oferece um dashboard interativo que apresenta gráficos dinâmicos e resumos financeiros, facilitando a análise rápida da saúde financeira. Com funcionalidades de cadastro e visualização detalhada de transações, você mantém o controle total sobre seu dinheiro, além de poder definir metas e acompanhar seu progresso.
+  A plataforma possui autenticação segura para garantir a proteção dos seus dados e um layout responsivo que funciona perfeitamente em celulares, tablets e desktops, proporcionando uma experiência consistente e amigável em qualquer dispositivo.
 
-## Expanding the ESLint configuration
+## 📁 Tecnologias
+- React
+- Tailwind CSS
+- TypeScript
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
