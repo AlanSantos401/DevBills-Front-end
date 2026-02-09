@@ -16,7 +16,7 @@ import TransactionsTypeSelector from "../components/TransactionsTypeSelector";
 import Input from "../components/Input";
 import { AlertCircle, Calendar, DollarSign, Save, Tag } from "lucide-react";
 import Select from "../components/Select";
-import Button from "../components/Button";
+import Button from "../components/button";
 import { useNavigate } from "react-router";
 import { createTransaction } from "../services/transactionService";
 import { toast } from "react-toastify";
@@ -48,6 +48,7 @@ const TransactionsForm = () => {
 	useEffect(() => {
 		const fetchCategories = async (): Promise<void> => {
 			const response = await getCategories();
+			console.log("Categorias recebidas do backend:", response); 
 			setCategories(response);
 		};
 
@@ -104,6 +105,8 @@ const TransactionsForm = () => {
 				categoryId: formData.categoryId,
 				type: formData.type,
 			};
+
+			console.log("Transação enviada:", transactionData);
 
 			await createTransaction(transactionData);
 			toast.success("Transação adicionada com sucesso!");

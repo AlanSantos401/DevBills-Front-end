@@ -23,9 +23,9 @@ import {
 } from "recharts";
 
 const InitialSummary: TransactionSummary = {
+	balance: 0,
 	totalIncomes: 0,
 	totalExpenses: 0,
-	balance: 0,
 	expenseCategory: [],
 };
 
@@ -67,9 +67,14 @@ const Dashboard = () => {
 		return `${name}: ${((percent ?? 0) * 100).toFixed(1)}%`;
 	};
 
-	const formatToolTipValue = (value: number | string): string => {
-		return formatCurrency(typeof value === "number" ? value : 0);
-	};
+	const formatToolTipValue = (
+	value: number | string | undefined,
+): string => {
+	return formatCurrency(
+		typeof value === "number" ? value : 0,
+	);
+};
+
 
 	return (
 		<div className="container-app py-6">
@@ -121,7 +126,7 @@ const Dashboard = () => {
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 mt-3">
 				<Card
-					icon={<TrendingUp size={20} className="text-primary-500" />}
+					icon={<TrendingUp size={21} className="text-red-700" />}
 					title="Despesas por categoria"
 					className="min-h-80"
 				>

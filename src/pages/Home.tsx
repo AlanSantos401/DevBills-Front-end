@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import Button from "../components/Button";
+import Button from "../components/button";
 import { Wallet, TrendingUp, List, CreditCard } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";

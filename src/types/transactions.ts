@@ -1,9 +1,8 @@
 import type { Category, CategorySummary } from "./category";
 
 export enum TransactionType {
-	EXPENSE = "expense",
-	INCOME = "income",
-	
+	EXPENSE = "EXPENSE",
+	INCOME = "INCOME",
 }
 
 export interface Transaction {

@@ -16,7 +16,7 @@ import {
 	deleteTransaction,
 	getTransactions,
 } from "../services/transactionService";
-import Button from "../components/Button";
+import Button from "../components/button";
 import { formatCurrency, formatDate } from "../utils/formatters";
 import { toast } from "react-toastify";
 

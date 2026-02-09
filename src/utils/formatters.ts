@@ -1,9 +1,14 @@
-export const formatCurrency = (value: number): string => {
+export const formatCurrency = (value?: number): string => {
+	if (value == null) {
+		return "R$ 0,00";
+	}
+
 	return new Intl.NumberFormat("pt-BR", {
-		currency: "BRL",
 		style: "currency",
+		currency: "BRL",
 	}).format(value);
 };
+
 
 
 export const formatDate = (date: string | Date): string => {
