@@ -24,6 +24,7 @@ export interface createTransactionDTO {
 	date: string | Date;
 	categoryId: string;
 	type: TransactionType;
+	installments?: number;
 }
 
 export interface TransactionFilter {

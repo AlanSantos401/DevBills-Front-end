@@ -27,6 +27,7 @@ interface FormData {
 	date: string;
 	categoryId: string;
 	type: TransactionType;
+	installments: number;
 }
 
 const initialFormData = {
@@ -35,6 +36,7 @@ const initialFormData = {
 	date: "",
 	categoryId: "",
 	type: TransactionType.EXPENSE,
+	installments: 1,
 };
 
 const TransactionsForm = () => {
@@ -48,7 +50,6 @@ const TransactionsForm = () => {
 	useEffect(() => {
 		const fetchCategories = async (): Promise<void> => {
 			const response = await getCategories();
-			console.log("Categorias recebidas do backend:", response); 
 			setCategories(response);
 		};
 
@@ -85,7 +86,13 @@ const TransactionsForm = () => {
 		event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
 	): void => {
 		const { name, value } = event.target;
-		setFormData((prev) => ({ ...prev, [name]: value }));
+
+		setFormData((prev) => ({
+			...prev,
+			[name]: name === "amount" || name === "installments"
+				? Number(value)
+				: value,
+		}));
 	};
 
 	const handleSubmit = async (event: FormEvent): Promise<void> => {
@@ -104,9 +111,8 @@ const TransactionsForm = () => {
 				date: `${formData.date}T12:00:00Z`,
 				categoryId: formData.categoryId,
 				type: formData.type,
+				installments: Number(formData.installments),
 			};
-
-			console.log("Transação enviada:", transactionData);
 
 			await createTransaction(transactionData);
 			toast.success("Transação adicionada com sucesso!");
@@ -187,6 +193,19 @@ const TransactionsForm = () => {
 							]}
 						/>
 
+						<Select
+							label="Repetir por"
+							name="installments"
+							value={formData.installments}
+							onChange={handleChange}
+							options={[
+								...Array.from({ length: 12 }, (_, i) => ({
+									value: String(i + 1), 
+									label: `${i + 1} mês${i + 1 > 1 ? "es" : ""}`,
+								})),
+							]}
+						/>
+
 						<div className="flex justify-end space-x-3 mt-2">
 							<Button
 								onClick={handleCancel}
@@ -208,7 +227,7 @@ const TransactionsForm = () => {
 								{loading ? (
 									<div className="flex items-center justify-center ">
 										<div className={`w-4 h-4 border-4 mr-1 border-t-transparent rounded-full animate-spin
-											${formData.type === TransactionType.EXPENSE ? "border-white": "border-black"}
+											${formData.type === TransactionType.EXPENSE ? "border-white" : "border-black"}
 											`} />
 									</div>
 								) : (

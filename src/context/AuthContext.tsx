@@ -6,17 +6,12 @@ import {
 	type ReactNode,
 } from "react";
 import type { AuthState } from "../types/Auth";
-import {
-	signInWithPopup,
-	onAuthStateChanged,
-	signOut as firebaSignOut,
-} from "firebase/auth";
-import { firebaseAuth, googleAuthProvider } from "../config/firebase";
+import { api } from "../services/api";
 
 interface AuthContextProps {
 	authState: AuthState;
-	signWithGoogle: () => Promise<void>;
-	signOut: () => Promise<void>;
+	signWithGoogle: (idToken: string) => Promise<void>;
+	signOut: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -25,72 +20,58 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [authState, setAuthState] = useState<AuthState>({
 		user: null,
 		error: null,
-		loading: false,
+		loading: true,
 	});
 
+	// 🔹 Verifica se já existe token salvo
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(
-			firebaseAuth,
-			(user) => {
-				console.log(user);
-				if (user) {
-					setAuthState({
-						user: {
-							uid: user.uid,
-							dispalyName: user.displayName,
-							email: user.email,
-							photoURL: user.photoURL,
-						},
-						error: null,
-						loading: false,
-					});
-				} else {
-					setAuthState({
-						user: null,
-						error: null,
-						loading: false,
-					});
-				}
-			},
-			(error) => {
-				console.error("Erro na autenticação");
-				setAuthState({
-					user: null,
-					error: error.message,
-					loading: false,
-				});
-			},
-		);
+		const token = localStorage.getItem("token");
 
-		return () => unsubscribe();
+		if (!token) {
+			setAuthState({ user: null, error: null, loading: false });
+			return;
+		}
+
+		// Aqui você poderia validar token no backend futuramente
+		setAuthState((prev) => ({ ...prev, loading: false }));
 	}, []);
 
-	const signWithGoogle = async (): Promise<void> => {
+	// 🔹 Login via Google
+	const signWithGoogle = async (idToken: string): Promise<void> => {
 		setAuthState((prev) => ({ ...prev, loading: true }));
 
 		try {
-			await signInWithPopup(firebaseAuth, googleAuthProvider);
+			const response = await api.post("/auth/google", { idToken });
+
+
+			localStorage.setItem("token", response.data.token);
+
+			setAuthState({
+				user: response.data.user,
+				error: null,
+				loading: false,
+			});
 		} catch (err) {
 			const message =
-				err instanceof Error ? err.message : "Error ao tentar logar";
+				err instanceof Error ? err.message : "Erro ao tentar logar";
 
-			console.error(err);
-			setAuthState((prev) => ({ ...prev, loading: false, error: message }));
+			setAuthState({
+				user: null,
+				error: message,
+				loading: false,
+			});
 		}
 	};
 
-	const signOut = async (): Promise<void> => {
-		setAuthState((prev) => ({ ...prev, loading: true }));
-		
-        try {
-			await firebaSignOut(firebaseAuth);
-		} catch (err) {
-			const message =
-				err instanceof Error ? err.message : "Error ao tentar logar";
+	// 🔹 Logout simples
+	const signOut = () => {
+		localStorage.removeItem("token");
 
-			console.error(err);
-			setAuthState((prev) => ({ ...prev, loading: false, error: message }));
-		}
+		setAuthState({
+			user: null,
+			error: null,
+			loading: false,
+		});
 	};
 
 	return (

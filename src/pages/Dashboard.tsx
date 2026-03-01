@@ -50,7 +50,7 @@ const Dashboard = () => {
 		async function loadTransactionsMonthly() {
 			const response = await getTransactionsMonthly(month, year, 4);
 
-			console.log(response);
+			
 			setMonthlyItemsData(response.history);
 		}
 
@@ -67,15 +67,16 @@ const Dashboard = () => {
 		return `${name}: ${((percent ?? 0) * 100).toFixed(1)}%`;
 	};
 
-	const formatToolTipValue = (
-	value: number | string | undefined,
-): string => {
-	return formatCurrency(
-		typeof value === "number" ? value : 0,
-	);
+
+const formatToolTipValue = (value: any) => {
+	if (Array.isArray(value)) {
+		value = value[0];
+	}
+
+	return formatCurrency(Number(value) || 0);
 };
 
-
+ 
 	return (
 		<div className="container-app py-6">
 			<div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">

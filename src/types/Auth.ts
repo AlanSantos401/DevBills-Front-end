@@ -1,9 +1,9 @@
 export interface AuthState {
 	user: {
 		uid: string;
-		dispalyName: string | null;
+		name: string | null;
 		email: string | null;
-		photoURL: string | null;
+		avatar: string | null;
 	} | null;
 	error: string | null;
 	loading: boolean;

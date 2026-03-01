@@ -8,6 +8,7 @@ interface MonthYearSelectProps {
 }
 
 const monthNames: readonly string[] = [
+	"Anual",
 	"Janeiro",
 	"Fevereiro",
 	"Março",
@@ -20,6 +21,7 @@ const monthNames: readonly string[] = [
 	"Outubro",
 	"Novembro",
 	"Dezembro",
+	
 ];
 
 const MonthYearSelect = ({
@@ -34,23 +36,33 @@ const MonthYearSelect = ({
 		(_, i) => currentYear - 5 + i,
 	);
 
-    const handleNextMonth = (): void => {
-      if(month === 12) {
-        onMonthChange(1);
-        onYearChange(year + 1);
-      } else {
-        onMonthChange(month + 1);
-      }
-    } 
+	const handleNextMonth = (): void => {
+	if (month === 0) {
+		onYearChange(year + 1);
+		return;
+	}
 
-    const handlePrevMonth = ():void => {
-      if(month ===1) {
-        onMonthChange(12);
-        onYearChange(year - 1);
-      } else {
-        onMonthChange(month - 1);
-      }
-    }
+	if (month === 12) {
+		onMonthChange(1);
+		onYearChange(year + 1);
+	} else {
+		onMonthChange(month + 1);
+	}
+};
+
+	const handlePrevMonth = (): void => {
+	if (month === 0) {
+		onYearChange(year - 1);
+		return;
+	}
+
+	if (month === 1) {
+		onMonthChange(12);
+		onYearChange(year - 1);
+	} else {
+		onMonthChange(month - 1);
+	}
+};
 
 
 	return (
@@ -59,7 +71,7 @@ const MonthYearSelect = ({
 				type="button"
 				className="p-2 rounded-full hover:bg-gray-800 hover:text-primary-500 transition-colors cursor-pointer"
 				aria-label="Mês anterior"
-                onClick={handlePrevMonth}
+				onClick={handlePrevMonth}
 			>
 				<ChevronLeft />
 			</button>
@@ -70,12 +82,12 @@ const MonthYearSelect = ({
 				</label>
 				<select
 					value={month}
-                    onChange={(event) => onMonthChange(Number(event.target.value))}
+					onChange={(event) => onMonthChange(Number(event.target.value))}
 					id="month-select"
 					className="bg-gray-800 border border-gray-700 rounded-md py-1 px-3 text-sm font-medium text-gray-100 focus: outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer"
 				>
 					{monthNames.map((name, index) => (
-						<option key={name} value={index + 1}>
+						<option key={name} value={index}>
 							{name}
 						</option>
 					))}
@@ -85,9 +97,9 @@ const MonthYearSelect = ({
 					Selecionar Ano
 				</label>
 				<select
-                value={year}
+					value={year}
 					id="year-select"
-                    onChange={(event) => onYearChange(Number(event.target.value))}
+					onChange={(event) => onYearChange(Number(event.target.value))}
 					className="bg-gray-800 border border-gray-700 rounded-md py-1 px-3 text-sm font-medium text-gray-100 focus: outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer"
 				>
 					{years.map((name) => (
@@ -102,7 +114,7 @@ const MonthYearSelect = ({
 				type="button"
 				className="p-2 rounded-full hover:bg-gray-800 hover:text-primary-500 transition-colors cursor-pointer"
 				aria-label="Proximo Mês"
-                onClick={handleNextMonth}
+				onClick={handleNextMonth}
 			>
 				<ChevronRight />
 			</button>

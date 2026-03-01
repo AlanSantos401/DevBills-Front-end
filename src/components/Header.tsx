@@ -11,6 +11,8 @@ interface NavLink {
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [avatarError, setAvatarError] = useState(false);
+
 
 	const { authState, signOut } = useAuth();
 	const { pathname } = useLocation();
@@ -31,25 +33,30 @@ const Header = () => {
 		setIsOpen(!isOpen);
 	};
 
-	const handleAvatar = () => {
-		if (!authState.user) return null;
+const handleAvatar = () => {
+	if (!authState.user) return null;
 
-		if (authState.user.photoURL) {
-			return (
+	const name = authState.user.name || "";
+	const photo = authState.user.avatar;
+	const firstLetter = name.charAt(0).toUpperCase();
+
+	return (
+		<div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-gray-800 text-white font-medium">
+			{photo && !avatarError ? (
 				<img
-					src={authState.user.photoURL}
-					alt={`foto do perfil do(a) ${authState.user.dispalyName}`}
-					className="w-8 h-8 rounded-full border border-gray-700"
+					src={photo}
+					alt={`foto do perfil do(a) ${name}`}
+					className="w-full h-full object-cover"
+					onError={() => setAvatarError(true)}
 				/>
-			);
-		}
+			) : (
+				firstLetter
+			)}
+		</div>
+	);
+};
 
-		return (
-			<div className="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white font-medium">
-				{authState.user.dispalyName?.charAt(0)}
-			</div>
-		);
-	};
+
 
 	return (
 		<header className="bg-gray-900 border-b border-gray-700">
@@ -87,7 +94,7 @@ const Header = () => {
 								<div className="flex items-center space-x-2">
 									{handleAvatar()}
 									<span className="text-sm font-medium">
-										{authState.user?.dispalyName}
+										{authState.user?.name}
 									</span>
 								</div>
 								<button
@@ -142,7 +149,7 @@ const Header = () => {
 								<div className="flex items-center justify-between p-4 border-t border-gray-700">
 									<div className="flex items-center space-x-2">
 										{handleAvatar()}
-										<span>{authState.user?.dispalyName}</span>
+										<span>{authState.user?.name}</span>
 									</div>
 									<button
 										type="button"

@@ -13,7 +13,7 @@ import { ToastContainer, type ToastContainerProps } from "react-toastify";
 const AppRoutes = () => {
   const toastConfig: ToastContainerProps ={
 	position: "top-right",
-	autoClose: 3000,
+	autoClose: 3001,
 	hideProgressBar: false,
 	newestOnTop: true,
 	closeOnClick: true,

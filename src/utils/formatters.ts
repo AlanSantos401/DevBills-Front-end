@@ -1,12 +1,20 @@
-export const formatCurrency = (value?: number): string => {
-	if (value == null) {
+export const formatCurrency = (
+	value: number | string | (number | string)[] | undefined
+): string => {
+	if (Array.isArray(value)) {
+		value = value[0];
+	}
+
+	const numericValue = Number(value);
+
+	if (!numericValue || isNaN(numericValue)) {
 		return "R$ 0,00";
 	}
 
 	return new Intl.NumberFormat("pt-BR", {
 		style: "currency",
 		currency: "BRL",
-	}).format(value);
+	}).format(numericValue);
 };
 
 
